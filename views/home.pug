@@ -1,0 +1,200 @@
+doctype html
+meta(name="viewport" content="width=device-width, initial-scale=1.0")
+head
+    title DSLearn - Home
+    link(rel='shortcut icon' type='image/png' href='/CSS/Images/tabLogo.png')
+    link(rel='stylesheet' type='text/css' href='/CSS/home.css')
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+    script.
+        var name, simCount,notes=[];    
+        var notesDelim = "|weBeSplittingMainlyLmao|", subBodDelim="|weBeSplittingNotelyLmao|", deleteCode ="delCode|~:"
+
+        $(document).ready(function(){
+            var h= $(".mainHeading").html().split("|-|-|");
+            var surveyed= '!{surveyed}';
+            name = h[0];
+            notes=h[3].split(notesDelim)
+            simCount=h[1];
+
+            if(name!="null")$(".mainHeading").html("Welcome home, "+name+"!")
+            else $(".mainHeading").html("Welcome home!");
+            diarySetup();
+
+            //- $("#cardHeading").html("$"+h[4]+" DSC")
+            $("#cure").click(function(){$("body").hide();})
+            $(".note").click(function(){
+                var id= $(this).attr("id");
+                if(id=="addNote"){
+                    $(".noteHolder").css("display","none");
+                    $(".formHolder").slideDown(100);
+                }
+                else {
+                    var theNoteDivs= document.getElementById("Diary").children;
+                    var hei= $(this).css("height")
+                    for(var i=0;i<notes.length;i++){
+                        if(theNoteDivs[i].id==$(this).attr("id")){
+                            theNoteDivs[i].style.height= hei=="60px"?"auto":"60px";
+                            $("#"+theNoteDivs[i].children[5].id).toggle(100)
+                        }
+                        else {
+                            if(hei!="60px"){
+                                if(i==0)theNoteDivs[i].style.display= "flex";
+                                else theNoteDivs[i].style.display= "block";
+                            } 
+                            else theNoteDivs[i].style.display= "none";
+                        }
+                    }
+                }
+            })
+            $("#cancer").click(function(e){
+                e.preventDefault();
+                $(".noteHolder").css("display","block");
+                $(".formHolder").slideUp(100);
+            })
+            $("#cancer").click();
+            $("#n").val(name)
+            $("#d0,#d1,#d2,#d3,#d4,#d5,#d6,#d7,#d8,#d9").click(function(){
+                $("body").hide();
+                var bId= $(this).attr("id"), newNotes=notesDelim;
+                var index = parseInt(bId.substring(bId.length-1))+1;
+
+                for(var i=1;i<notes.length;i++){
+                    if(i!=index&&i!=notes.length-1)newNotes+=(notes[i]+notesDelim);
+                    else if(i!=index) newNotes+=notes[i];
+                }
+                if(newNotes.length>=notesDelim.length)newNotes=newNotes.substring(0,newNotes.length-notesDelim.length);
+
+                $("#sub").val(deleteCode)
+                $("#bod").val(newNotes)
+                $("#cure").click();
+            })
+            $("#surv").click(function(){location.href="/skipsurvey"})
+            
+            if(surveyed==0){
+                $(".mainDiv2").hide()
+                $(".surveyDiv").show()
+            }
+            else $(".surveyDiv").hide()
+        })
+        function diarySetup(){
+            var notesDiv= document.getElementById("Diary");
+
+            for(var i=1;i<notes.length;i++){
+                var note = document.createElement("DIV");
+                note.classList.add("note");
+                note.id="n"+i;
+
+                var s1= document.createElement("SPAN");
+                s1.innerHTML= notes[i].split(subBodDelim)[0]
+                s1.classList.add("nH");
+
+                var s2= document.createElement("SPAN");
+                s2.innerHTML= notes[i].split(subBodDelim)[1]
+                s2.style.color="red"
+                
+                var b= document.createElement("button");
+                
+                b.style.display="none";
+                b.id="d"+(i-1)
+                b.innerHTML="Delete"
+
+                note.appendChild(s1);
+                note.appendChild(document.createElement("br"));
+                note.appendChild(s2);
+                note.appendChild(document.createElement("br"));
+                note.appendChild(document.createElement("br"));
+                note.appendChild(b);
+                notesDiv.appendChild(note)
+            }
+        }
+    body
+        include ./header.pug
+        .mainDiv
+            h1.mainHeading #{name}|-|-|#{simC}|-|-|#{prem}|-|-|#{notes}|-|-|#{coins}
+            .surveyDiv
+                p   
+                    |Hi there! Welcome to DSLearn. 
+                    br
+                    br
+                    |The website is currently under development. The product you're seeing is just a beta version.
+                    br
+                    |We're currently conducting a survey and your participation will be much appreciated.
+                    br
+                    br
+                    <b style="font-size:17px">If you're interested in taking the survey: </b>
+                    br
+                    |1) Please click 
+                    a(href="/algorithms" style="color:red") here
+                    | &nbspand go through the simulations. 
+                    br
+                    |2) After having done that, please come back and take the survey
+                    a#surv(href="https://forms.gle/oU8QvGzy3kGNKFtM9" target="_blank" style="color:red") &nbsphere.
+                    br
+                    br
+                    <b style="font-size:17px">If you're not interested in taking the survey: </b>
+                    br
+                    |Please click 
+                    a#skip(href="/skipsurvey" style="color:red") here.
+            .mainDiv2
+                .tl
+                    //- .card#coin
+                        p#cardHeading(style="color: #ffb31a;") $100 DSC
+                        span.cardSpan.
+                            Cash in for premium benefits with your hard earned DSCurrency! (Click purchase to see more)
+                        br
+                        a(href='#')
+                            button.cardButton Coming Soon
+                    .card#coin(style="background:linear-gradient(#94b8b8, #5c8a8a);")
+                        p#cardHeading(style="color:white;") Take Survey
+                        span.cardSpan(style="color:white").
+                            Help a brudda out and take the survey &lt;3. Your help will be much appreciated.
+                        br
+                        a(href='https://forms.gle/oU8QvGzy3kGNKFtM9' target="_blank")
+                            button.cardButton Take Survey
+                    .card#TOH
+                        p#cardHeading(style="color:#595959;") Towers of Hanoi
+                        span.cardSpan.
+                            Visualize recursion by playing everyone's go-to example for learning recursion!
+                        br
+                        a(href='/towers-of-hanoi')
+                            button.cardButton Play
+                    .card#TP
+                        p#cardHeading(style="color:#595959;") Test Progress Report
+                        .progressBg 
+                            .progress 
+                        br
+                        span.cardSpan(style="color:black") 0% 
+                        span.cardSpan.
+                            (20% more to your next prize)
+                        br
+                        a(href='#')
+                            button.cardButton Coming Soon
+                    .card#SP
+                        p#cardHeading(style="color:#595959;") Simulations Viewed
+                        .progressBg 
+                            .progress 
+                        br
+                        span.cardSpan(style="color:black") 0% 
+                        span.cardSpan.
+                            (20% more to your next prize)
+                        br
+                        a(href='/#')
+                            button.cardButton Coming Soon
+                .right
+                    h2(style="font-weight: 300;border-bottom:#b8b5b5 1px solid;") Notes
+                    .formHolder
+                        form(action="/" method="POST" autocomplete="off")
+                            input(name="sub" type="text" id="sub" placeholder="Subject")
+                            input(style="display:none" type="text" id="n" name="name")
+                            br
+                            br
+                            textarea(id="bod" name="bod", cols="30", rows="10" placeholder="Body")
+                            br
+                            br
+                            button#cure Add
+                            |&nbsp&nbsp
+                            button#cancer Cancel
+                    .noteHolder#Diary
+                        .note#addNote
+                            img(src="CSS/Images/plus.png" height="30px" width="30px" style="margin:auto;opacity:0.7")
+        include ./footer.pug

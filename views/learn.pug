@@ -1,0 +1,32 @@
+doctype html
+meta(name="viewport" content="width=device-width, initial-scale=1.0")
+html
+    head
+        title DSLearn - Learn
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+    link(rel="stylesheet" type="text/css" href="/CSS/learn.css")
+    link(rel="shortcut icon" type="image/png" href="/CSS/Images/tabLogo.png")
+    script.
+        $(document).ready(function(){
+            $(".card").hover(
+                function(){$(this).animate({height: '+=10',width: '+=10'},100);},
+                function(){$(this).animate({height: '-=10px',width: '-=10'},100)}
+            );
+            $(".card").click(function(){location.href = $(this).attr("value");});
+        });
+    body
+        include ./header.pug
+        div.cardDiv
+            div#AA.card(value="/info/algo")
+                h1 Algorithm Analysis
+            div#SE.card(value="/info/search")
+                h1 Searching Algorithms
+            div#SO.card(value="/info/sort")
+                h1 Sorting Algorithms
+            div#RE.card(value="/info/recursion")
+                h1 Recursion
+            div#LI.card(value="/info/linear")
+                h1 Linear Structures
+            div#NL.card(value="/info/nonlinear")
+                h1 Non-Linear Structures
+        include ./footer.pug

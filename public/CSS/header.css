@@ -1,0 +1,114 @@
+body{font-family: 'Segoe UI';}
+.header{
+    height: 50px;
+    width: 100%;
+    border-bottom: 1px solid #d9d9d9;
+    user-select:none;
+}
+.logoImg{
+    position: absolute;
+    left: 73px;
+    top: 22px;
+}
+a{text-decoration: none;}
+a:hover{color: black;}
+.logo{
+    font-size: 22px;
+    color: black;
+    position: relative;
+    top: 15px;
+    left: 100px
+}
+.sections{
+    color:#999999;
+    position: relative;
+    left: 100px;
+    top: 15px;
+    margin-left: 20px;
+}
+.rightHolder{
+    display: flex;
+    justify-content: space-evenly;
+    width: 100px;
+    position: absolute;
+    right: 10px;
+    margin-top: 15px;
+    margin-right: 100px ;
+}
+#US{
+    opacity: 0.5;
+    height: 20px;
+    width: 20px;
+}
+#BE{
+    opacity: 0.5;
+    height: 20px;
+    width: 20px;
+}
+.toast{
+    height: 22px;
+    width: 100px;
+    position: absolute;
+    box-shadow: 0px 0px 5px 1px gray;
+    text-align: center;
+    color: rebeccapurple;
+    border-radius: 15px;
+    right:100px;
+    display: none;
+    font-size: 13px;
+}
+#US:hover, #BE:hover{opacity: 1;}
+@media (max-width:900px){
+    .logoImg{
+        position: absolute;
+        left: 20px;
+    }
+    .logo{
+        font-size: 22px;
+        color: black;
+        position: relative;
+        top: 15px;
+        left: 50px
+    }
+    .sections{
+        left: 50px;
+        margin-left: 10px;
+        font-size: 12px;
+    }
+}
+@media (max-width:500px){
+    .rightHolder{
+        width: 60px;
+        top: 15px;
+    }
+}
+@media (max-width:500px){
+    .rightHolder{
+        width: 60px;
+        top: 15px;
+    }
+}
+@media (max-width:420px){
+    td,th{font-size: 13px;}
+    #diff{font-size: 13px;}
+}
+@media (max-width:370px){#aboutme{display: none;}}
+@media (max-width:330px){
+    .logoImg{
+        width: 25px;
+        height: 25px;
+        top:28px
+    }
+    .logo{
+        font-size: 17px;
+        top: 20px;
+        left: 35px;
+    }
+    .sections{
+        top: 20px;
+    }
+}
+@media (max-width:800px){
+    .toast{right: 0px;}
+    .rightHolder{margin-right: 0px;}
+}

@@ -1,0 +1,22 @@
+doctype html
+meta(name="viewport" content="width=device-width, initial-scale=1.0")
+html
+    link(rel="shortcut icon" type="image/png" href="/CSS/Images/tabLogo.png")
+    head
+        title DSLean - Oops!
+    style.
+        .mainDiv{text-align:center;}
+        #herep{font-size:20px;}
+        #here{
+            font-size:20px;
+            color:#cc66ff;
+        }
+        #here:hover{color:purple;}
+    body
+        include ./header.pug
+        .mainDiv
+            h1 
+                u Error!!!
+            p#herep The page that you tried to access is either down or cannot be accessed on your device. Terrible sorry for the inconvenience <3.
+            a#here(href="/" style="text-decoration:none") Click here to go to the DSLearn home page.
+        include ./footer.pug

@@ -1,0 +1,33 @@
+Quick Sort
+public class Main {
+    public static void main(String[] args) {
+		int[] arr= {3,1234,5,2,34,36,5};
+		quickSort(arr,0,arr.length);
+		System.out.println(arr);
+    }
+    static void quickSort(int[] arr,int low,int high){
+        if(low<high){
+            int partition= partition(arr,low,high);
+            quickSort(arr,low,partition);
+            quickSort(arr,partition+1,high);
+        }
+    }
+    static int partition(int[] arr,int low,int high){
+        int i=low, j= high;
+        int pivot=arr[low];
+        while(i<j){
+            do{i++;}while(i<j&&arr[i]<=pivot);
+            do{j--;}while(arr[j]>pivot);
+            if(i<j)swap(arr,i,j);
+        }
+        swap(arr,low,j);
+        return j;
+    }
+    public static void swap(int[] arr,int i,int j){
+        int t=arr[i];
+        arr[i]=arr[j];
+        arr[j]=t;
+    }
+}
+|-|-|
+4-6 9-13 16-23 27-29

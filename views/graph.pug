@@ -1,0 +1,110 @@
+doctype html
+meta(name="viewport" content="width=device-width, initial-scale=1.0")
+html
+    head
+        title DSLearn - Graph
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+    link(rel="stylesheet" type="text/css" href="/CSS/graph.css")
+    link(rel="shortcut icon" type="image/png" href="/CSS/Images/tabLogo.png")
+    script(src="/JS/graph.js")
+    script.
+        var controls,moveControls=false,clickingOther=false,panCanvas=false, algoSpeed=1000;
+        var mouseClickPosY,mouseClickPosX,mouseX,mouseY, mouseUp=true, settingWeight=false;
+        $(document).ready(function(){
+            controls=document.getElementById("controls");
+            onmousemove=function(e){ 
+                mouseX= e.pageX;
+                mouseY= e.pageY;
+                if(moveControls&&!clickingOther){
+                    controls.style.top=(mouseY-10)+"px";
+                    controls.style.left=(mouseX-10)+"px";
+                }
+                if(nodeSelected&&!settingWeight){
+                    selectedNode.x=mouseX-$(".mainDiv").offset().left;
+                    selectedNode.y=mouseY-$(".mainDiv").offset().top;
+                }
+            }
+            $(".mainDiv").css("height",($(window).height()-$('.mainDiv').offset().top-20)+"px")
+            canvasHeight= parseInt($(".mainDiv").css("height"));
+            $("#controls").css("left",($(window).width())-parseInt($("#controls").css("width"))-220+"px");
+            $("#controls").mousedown(function(){moveControls=true})
+            $("button,input,select").mousedown(function(){clickingOther=true;})
+            $("body").mouseup(function(){
+                clickingOther=moveControls=false
+                $("body").css("cursor","DEFAULT");
+                $("#controls").css("cursor","grab")
+                mouseUp=true;
+            })
+            $("#controls").mousedown(function(){$("#controls,body").css("cursor","grabbing")})
+            $("canvas").mousedown(function(){
+                mouseClickPosX=mouseX;
+                mouseClickPosY=mouseY;
+                if(event.button==0)selectNode(0)
+                mouseUp=false;
+            })
+            $("canvas").mouseup(function(){
+                if(event.button==2)selectNode(2)
+                nodeSelected=false;
+            })
+            $("#edit,#del").click(function(){editEdge($(this).attr("id")=="del");})
+            $("#dct,#wtd").on("input change",function(){
+                directed= document.getElementById("dct").checked;
+                weighted= document.getElementById("wtd").checked;
+            })
+            $("#mst,#djk").click(function(){algoSetup($(this).attr("id"));})
+            if (document.addEventListener) document.getElementById("cvs").addEventListener('contextmenu',function(e){e.preventDefault();}, false);
+            else document.getElementById("cvs").attachEvent('oncontextmenu', function () {window.event.returnValue = false;});
+            
+            canvasSetup();
+        });
+        function toggleAccess(access){document.getElementById("mst").disabled=document.getElementById("djk").disabled=access;}
+    body
+        include ./header.pug
+        h1(style="font-size:25px;text-align:center") Simulation - Graph
+        #controls
+            span(style="font-size:20px;font-weight:bold;") Control Panel
+            br
+            span(style="font-size:13px;") (drag and drop)
+            br
+            br
+            span Instructions
+            br
+            span#inst 1. Click on canvas to add vertex
+            br
+            span#inst 2. Click on a vertex to select it
+            br
+            span#inst 3. You can drag and drop vertices
+            br
+            span#inst 4. To make an edge, select a vertex then click another vertex
+            br
+            span#inst 5. Right click on a vertex to delete it
+            br
+            br
+            .edit
+                span Edit Edge
+                br
+                select#EE1
+                    option(value="def") Select vertex
+                select#EE2
+                    option(value="def") Select vertex
+                br
+                button#edit Edit
+                button#del Delete
+                br
+                br
+                span Graph Settings
+                br
+                input#wtd(type='checkbox' checked)
+                span Weighted
+                br
+                input#dct(type='checkbox' checked)
+                span Directed
+            br
+            span Algorithms
+            button#mst(style="width:100%") Get Minimum Spanning Tree (MST)
+            button#djk(style="width:100%") Dijkstra Shortest Path
+
+
+        .mainDiv
+            canvas#cvs(width="1000px" )
+        include ./footer.pug

@@ -1,0 +1,267 @@
+doctype html
+meta(name="viewport" content="width=device-width, initial-scale=1.0")
+html
+    head
+        title DSLearn - Linked Simulations
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+    script(src='/JS/code.js')
+    if(topic=="linked-stack"||topic=="queue")
+        script(src='/JS/linkedSim.js')
+    if(topic.endsWith("heap"))
+        script(src='/JS/heap.js')
+    if(topic=="binary-search-tree"||topic.endsWith("heap"))
+        script(src='/JS/BST.js')
+    if(topic.endsWith("sort"))
+        script(src='/JS/otherSorts.js')
+    link(rel="stylesheet" type="text/css" href="/CSS/canvasSims.css")
+    link(rel="shortcut icon" type="image/png" href="/CSS/Images/tabLogo.png")
+    script.
+        var topic='!{topic}',controls,moveControls=false,clickingOther=false,panCanvas=false,info;
+        var canvas,context,nodes=[],deleteSpeed=1000,delling=false,interval,mouseClickPosY,mouseClickPosX;
+        var canvasHeight=550, frameRate=5,trialRate=500,addNode,delNode,findNode, nodeValue,mouseX,mouseY,moveInterval;
+        const IDLE="#b3ffb3",TRAVERSING="#ffc34d",HIGHLIGHT="#ff6666",CANVAS_COLOR="#f2f2ff"
+        $(document).ready(function(){
+            codedJ =document.getElementById("cdv").childNodes[0].innerHTML;
+            codedPy=document.getElementById("cdv").childNodes[1].innerHTML;
+            codedCs=document.getElementById("cdv").childNodes[2].innerHTML;
+            codedCp=document.getElementById("cdv").childNodes[3].innerHTML;
+
+            txtCodeParser(codedJ,codedPy,codedCs,codedCp);
+            makeCodeTable(codedJ.split('\n').length);
+
+            info= document.getElementById("info");
+            controls=document.getElementById("controls");
+            if(topic.endsWith("tree")||topic.endsWith("heap")){
+                $("#cDiv,.rDiv").css("height",($(window).height()-$('#BRO').offset().top-20)+"px")
+                canvasHeight=parseInt($("#cDiv").css("height"));
+            }
+            if(topic=="linked-stack")$("#heading").html("Simulation - Linked Stack")
+            if(topic=="queue")$("#heading").html("Simulation - Linked Queue")
+            if(topic=="merge-sort")$("#heading").html("Simulation - Merge Sort")
+            if(topic=="heap-sort")$("#heading").html("Simulation - Heap Sort")
+            if(topic=="quick-sort")$("#heading").html("Simulation - Quick Sort")
+            if(topic=="binary-search-tree"||topic.endsWith("heap")){
+                if(topic=="min-heap")$("#heading").html("Simulation - Min Heap")
+                if(topic=="max-heap")$("#heading").html("Simulation - Max Heap")
+                if(topic=="binary-search-tree")$("#heading").html("Simulation - Binary Search Tree")
+                if(!topic.endsWith("heap"))$("#fin,#t3,#t2").prop("disabled",false)
+                else $("#fin").prop("disabled",true)
+                $("#add").html("Add")
+                $("#del").html("Delete")
+            }
+            else{
+                //- document.getElementById("IB").checked=true;
+                //- $("#IB").hide()
+                //- setTimeout(apply,10)
+                $("#mt").hide();
+                if(topic.endsWith("sort")){
+                    $("#bruh").hide()
+                    $("#srt").css("display","block")
+                }
+            }
+            onmousemove=function(e){ 
+                mouseX= e.pageX;
+                mouseY= e.pageY;
+                if(moveControls&&!clickingOther){
+                    controls.style.top=(mouseY-10)+"px";
+                    controls.style.left=(mouseX-10)+"px";
+                }
+                if((topic!="queue"&&topic!="linked-stack")&&panCanvas&&!document.getElementById("up").disabled){
+                    for(var i=0;i<nodes.length;i++){
+                        if(nodes[i]!=null){
+                            nodes[i].x+=mouseX-mouseClickPosX;
+                            nodes[i].y+=mouseY-mouseClickPosY;
+                        }
+                    }
+                }
+            }
+            $("#J,#CS,#CP,#P").change(apply);
+            $("#CV,#IB").change(apply);
+            $("#controls").css("left",($(window).width())-parseInt($("#controls").css("width"))-50+"px");
+            $("#controls").mousedown(function(){moveControls=true})
+            $("button,input").mousedown(function(){clickingOther=true;})
+            $("body").mouseup(function(){
+                panCanvas=clickingOther=moveControls=false
+                $("body").css("cursor","DEFAULT");
+                $("canvas,#controls").css("cursor","grab")
+                clearInterval(moveInterval)
+                moveInterval=undefined;
+            })
+            $("#sp").on("input change",function(){
+                clearInterval(interval);
+                frameRate=$(this).val()
+                if(topic=="stack"||topic=="queue")interval= setInterval(updateViewPortNonB,frameRate);
+                else interval= setInterval(updateViewPort,frameRate);
+            })
+            $("canvas,#controls").mousedown(function(){$("canvas,#controls,body").css("cursor","grabbing")})
+            $("canvas").mousedown(function(){
+                mouseClickPosX=mouseX;mouseClickPosY=mouseY;
+                moveInterval= setInterval(function(){mouseClickPosX=mouseX;mouseClickPosY=mouseY;},10)
+                panCanvas=true;
+            })
+            $("#add").click(function(){
+                if(t1.value!=""){
+                    toggleAccess(true,"add");
+                    nodeValue=document.getElementById("t1").value;
+                }
+            })
+            $("#del").click(function(){
+                if(topic!="binary-search-tree"&&!delling)delNode=true
+                else if(t2.value!=""){
+                    toggleAccess(true,"del");
+                    nodeValue=document.getElementById("t2").value;
+                }
+            })
+            $("#fin").click(function(){
+                if(t3.value!=""){
+                    toggleAccess(true,"fin");
+                    nodeValue=document.getElementById("t3").value;
+                }
+            })
+            $("#sort").click(function(){
+                playStarted=true;
+            })
+            $("#shfl").click(function(){if(!playStarted)generateRandomArray();})
+            $("#t1,#t2,#t3").on('keyup', function (e) {
+                var id=$(this).attr("id");
+                if (e.key === 'Enter' || e.keyCode === 13) {
+                    if(id=="t1"&&!document.getElementById("add").disabled)$("#add").click();
+                    if(id=="t2"&&!document.getElementById("del").disabled)$("#del").click();
+                    if(id=="t3"&&!document.getElementById("fin").disabled)$("#fin").click();
+                }
+            });
+            $("#t1,#t2,#t3").on("input",function(){
+                $("#t1").val($("#t1").val().replace(/[\]\[-~!?<>:@#$%^&*()_+}{';".,/|=\\a-zA-Z]/gi,""));
+                $("#t2").val($("#t2").val().replace(/[\]\[-~!?<>:@#$%^&*()_+}{';".,/|=\\a-zA-Z]/gi,""));
+                $("#t3").val($("#t3").val().replace(/[\]\[-~!?<>:@#$%^&*()_+}{';".,/|=\\a-zA-Z]/gi,""));
+            })
+            if(topic=="linked-stack"||topic=="queue")canvasSetupNonB();
+            if(topic=="binary-search-tree"||topic.endsWith("heap"))canvasSetupBST();
+            if(topic.endsWith("sort"))canvasSetupSort();
+        });
+        function toggleAccess(access,action){
+            document.getElementById("add").disabled=document.getElementById("del").disabled=document.getElementById("fin").disabled=access;
+            document.getElementById("CV").disabled=document.getElementById("IB").disabled=access;
+            document.getElementById("center").disabled=document.getElementById("left").disabled=document.getElementById("right").disabled=document.getElementById("down").disabled=document.getElementById("up").disabled=access
+            if(action=="add")addNode=access;
+            if(action=="del")delNode=access;
+            if(action=="fin")findNode=access;
+        }
+        function apply(){
+            if(document.getElementById("CV").checked&&document.getElementById("IB").checked){
+                $(".rDiv").hide();
+                $("#cDiv").css("width","100%")
+                canvas.width=parseInt($("#cDiv").css("width"))
+            }
+            else if(document.getElementById("CV").checked&&!document.getElementById("IB").checked){
+                $(".rDiv").show();
+                $(".codeDiv").hide();
+                $(".messageBoard").show();
+                $(".messageBoard").css("height","100%");
+                $("#cDiv").css("width","69%")
+                canvas.width=parseInt($("#cDiv").css("width"))
+            }
+            else if(!document.getElementById("CV").checked&&document.getElementById("IB").checked){
+                $(".rDiv").show();
+                $(".messageBoard").hide();
+                $(".codeDiv").show();
+                $(".codeDiv").css("height","100%");
+                $("#cDiv").css("width","69%")
+                canvas.width=parseInt($("#cDiv").css("width"))
+            }
+            else if(!document.getElementById("CV").checked&&!document.getElementById("IB").checked){
+                $(".rDiv").show();
+                $(".codeDiv").show();
+                $(".codeDiv").css("height","50%");
+                $(".messageBoard").show();
+                $(".messageBoard").css("height","50%");
+                $("#cDiv").css("width","69%")
+                canvas.width=parseInt($("#cDiv").css("width"))
+            }
+            if(document.getElementById("J").checked)makeCodeTable(codedJ.split("\n").length)
+            if(document.getElementById("P").checked)makeCodeTable(codedPy.split("\n").length)
+            if(document.getElementById("CP").checked)makeCodeTable(codedCp.split("\n").length)
+            if(document.getElementById("CS").checked)makeCodeTable(codedCs.split("\n").length)
+        }
+    body
+        include ./header.pug
+        
+        h1#heading #{topic}
+        #controls
+            span(style="font-size:20px;font-weight:bold;") Control Panel 
+            br
+            span(style="font-size:13px;") (drag and drop)
+            br
+            br
+            div#bruh
+                input#t1(type="text" maxlength="4")
+                button#add Push
+                br
+                input#t2(disabled type="text" maxlength="4")
+                button#del Pop
+                br
+                input#t3(disabled type="text" maxlength="4")
+                button#fin(disabled) Find
+                br
+                br
+            br
+            
+            //- |Simulation Speed
+            //- br
+            //- input#sp(type="range" value="5" min="1" max="100")
+            //- br
+            
+            div#srt(style="display:none")
+                button#sort Sort
+                button#shfl Shuffle
+                br
+                br
+            div#mt
+                span Move Tree
+                br
+                button#up Up
+                button#down Down
+                br
+                button#center Center
+                br
+                button#left Left
+                button#right Right
+                br
+                br
+            |Hide Panels
+            br
+            input#CV(type="checkbox")
+            span Code Visualizer
+            br
+            input#IB(type="checkbox")
+            span Message Board
+            br
+            div
+                br
+                span Code Visualizer Language
+                br
+                input#J(checked type="radio" name="langSelection")
+                span Java&nbsp&nbsp&nbsp&nbsp&nbsp
+                br
+                input#CS(type="radio" name="langSelection")
+                span C#&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                br
+                input#CP(type="radio" name="langSelection")
+                span C++&nbsp&nbsp&nbsp&nbsp
+                br
+                input#P(type="radio" name="langSelection")
+                span Python
+                br
+        div#BRO(style="display: flex;justify-content: space-evenly;")
+            div#cDiv
+                canvas#cvs(width="1000px" height="550px")
+            .rDiv
+                div#cdv.codeDiv
+                    p #{j}
+                    p #{p}
+                    p #{cs}
+                    p #{cp}
+                .messageBoard(style="opacity:0.8")
+                    p#info.info
+                        |Coming Soon
+        include ./footer.pug

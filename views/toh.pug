@@ -1,0 +1,64 @@
+doctype html
+meta(name="viewport" content="width=device-width, initial-scale=1.0")
+html
+    head
+        title DSLearn - Towers of Hanoi
+    link(rel="shortcut icon" type="image/png" href="/CSS/Images/tabLogo.png")
+    link(rel="stylesheet" type="text/css" href="/CSS/toh.css")
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+    script(src="/JS/toh.js")
+        
+    body#bod
+        include ./header.pug
+        div.help
+            p
+                b Rules 
+                br
+                | - Move all the disks from the first rod to the last rod.
+                br
+                | - You cannot place a disk on a disk smaller than it.
+                br
+                | - You can only move the topmost disk from a stack.
+                br
+                | - To start playing, simply drag and drop the disks.
+                br
+                | - Click on Solve to make the computer solve it for you.
+                br
+                | - If you cannot find the Solve button, click on the Reset button.
+                br
+                | - Enjoy!
+        .THEDIV#lmao
+            .headingDiv
+                span#heading Towers of Hanoi
+                span#help 
+                    |&nbsp&nbsp&nbsp Help
+                    
+            .mainDiv#tohDiv
+                div#TA.towerHolder
+                    div#d6.disks
+                    div#d5.disks
+                    div#d4.disks
+                    div#d3.disks
+                    div#d2.disks
+                    div#d1.disks
+                div#TB.towerHolder
+                div#TC.towerHolder
+            .downPanel
+                div.downSubPanel
+                    button#up.buttons 
+                        img(height="10px" width="20px" src="/CSS/Images/arrowUp.png")
+                    button#down.buttons 
+                        img(height="10px" width="20px" src="/CSS/Images/arrowDown.png")
+                    button#play.buttons
+                        |Solve
+                    button#pause.buttons
+                        |Pause
+                    button#step.buttons
+                        |Next Step
+                .downSubPanel
+                    h4#nd Number of Disks : 3
+                    h4#m Moves : 0
+                    h4#tm Min moves : 7
+        include ./footer.pug
+        script.
+            diskVisualize();

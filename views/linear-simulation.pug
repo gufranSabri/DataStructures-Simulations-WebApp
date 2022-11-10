@@ -1,0 +1,223 @@
+doctype html
+meta(name="viewport" content="width=device-width, initial-scale=1.0")
+head
+    title DSLearn - Simulation
+    link(rel='shortcut icon' type='image/png' href='/CSS/Images/tabLogo.png')
+    link(rel='stylesheet' type='text/css' href='/CSS/linearSim.css')
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+    script(src='/JS/code.js')
+    script(src='/JS/linearSim.js')
+    if(topic.endsWith("search"))
+        script(src='/JS/searchSim.js')
+    if(topic.startsWith("selection")||topic.startsWith("insertion")||topic.startsWith("bubble"))
+        script(src='/JS/simpleSortSim.js')
+    if(topic=="quick-sort")
+        script(src='/JS/quickSortSim.js')
+    if(topic.startsWith("stack")||topic.startsWith("queue"))
+        script(src='/JS/arrayStQu.js')
+    script.
+        $(document).ready(function(){
+            var topic= $("#help").html();
+            codedJ =document.getElementById("cdv").childNodes[0].innerHTML;
+            codedPy=document.getElementById("cdv").childNodes[1].innerHTML;
+            codedCs=document.getElementById("cdv").childNodes[2].innerHTML;
+            codedCp=document.getElementById("cdv").childNodes[3].innerHTML;
+
+            txtCodeParser(codedJ,codedPy,codedCs,codedCp);
+            makeCodeTable(codedJ.split('\n').length);
+            setup(topic);
+            $("#help").html("Settings")
+        })
+    body
+        include ./header.pug
+        div.help#helpBox
+            p
+                b Array
+                |  - The indexed stack on the left hand side of the page is the array.
+                |If a box in the array is gray, that means that spot in the array is empty. If it&apos;s
+                |green and has a number in it, that spot in the array is not empty and has an element in it.
+                br
+                br
+                b Adding Elements
+                |  - To add elements, use the green colored card titled &apos;Add Elements&apos;.
+                |Simply fill the text field with an integer and press &apos;Add&apos;. Pressing the &apos;Fill&apos; button
+                |will fill the array with the integer in the text field.
+                br
+                br
+                b Deleting Elements
+                |  - To delete elements, use the red colored card titled &apos;Add Elements&apos;.
+                |Simply fill the text field with an integer and press &apos;Delete&apos;. Pressing the &apos;Remove All&apos; button
+                |will remove all the elements in the array that are equal to the integer in the text field.
+                br
+                br
+                b Control Panel
+                |  - Using the Control Panel is simple enough. The &quot;Play&quot; button will start the simulation. 
+                | The &apos;Pause&apos; button will pause the simulation. (Press on &apos;Play&apos; to resume the simulation). The &apos;Next Step&apos; button 
+                | will advance the simulation by one step when the simulation is paused.
+                br
+                |The &apos;Sort&apos; button sorts the array and the &apos;Reverse&apos; button reverses it. The &apos;Empty&apos; button empties the array.
+                br
+                br
+                b Message Board
+                |  - The message board displays helpful information to explain what is happening during the simulation.
+                br
+                br
+                a(href="#" onclick="bringHelp(false)") Close
+        div#head.heading
+            h1#heading Linear Search
+            p#help #{topic}
+            div#settings
+                h2 Settings
+                h4 Hide
+                input#AB(type="checkbox")
+                span.ABB 
+                    |Add box
+                    br
+                input#DB(type="checkbox")
+                span.DBB 
+                    |Delete box
+                    br
+                input#COP(type="checkbox")
+                span Control Panel
+                br
+                input#CV(type="checkbox")
+                span.CVV 
+                    |Code Visualizer
+                    br
+                input#IB(type="checkbox")
+                span.IBB 
+                    |Information Board
+                    br
+                br
+                h4 Code Visualizer Language
+                input#J(checked type="radio" name="langSelection")
+                span Java
+                br
+                input#CS(type="radio" name="langSelection")
+                span C#
+                br
+                input#CP(type="radio" name="langSelection")
+                span C++
+                br
+                input#P(type="radio" name="langSelection")
+                span Python
+                br
+                br
+                a(href="#" onclick="bringHelp(true)") Help
+
+        div#body.mainDiv
+            div.arr#arrLol
+                div#0.eleBox
+                    p#index 0
+                    div.ele
+                        p
+                    div.pointer
+                        p null
+                div#1.eleBox(style='position:relative;top:4px')
+                    p#index 1
+                    div.ele
+                        p
+                    div.pointer
+                        p null
+                div#1.eleBox(style='position:relative;top:8px')
+                    p#index 2
+                    div.ele
+                        p
+                    div.pointer
+                        p null
+                div#1.eleBox(style='position:relative;top:12px')
+                    p#index 3
+                    div.ele
+                        p
+                    div.pointer
+                        p null
+                div#1.eleBox(style='position:relative;top:16px')
+                    p#index 4
+                    div.ele
+                        p
+                    div.pointer
+                        p null
+                div#1.eleBox(style='position:relative;top:20px')
+                    p#index 5
+                    div.ele
+                        p
+                    div.pointer
+                        p null
+                div#1.eleBox(style='position:relative;top:24px')
+                    p#index 6
+                    div.ele
+                        p
+                    div.pointer
+                        p null
+                div#1.eleBox(style='position:relative;top:28px')
+                    p#index 7
+                    div.ele
+                        p
+                    div.pointer
+                        p null
+                div#1.eleBox(style='position:relative;top:32px')
+                    p#index 8
+                    div.ele
+                        p
+                    div.pointer
+                        p null
+            div.editBox#eb
+                div#add.editBoxHalf
+                    h3 Add Elements
+                    input#AE.textArea(type='number')
+                    br
+                    br
+                    button#addEle.buttons(style='background-color:#c6ff1a') Add
+                    br
+                    br
+                    button#fill.buttons(style='background-color:#c6ff1a') Fill
+                div#remove.editBoxHalf
+                    h3 Delete Elements
+                    input#DE.textArea(type='number')
+                    br
+                    br
+                    button#dlt.buttons(style='background-color:#ffa366') Delete
+                    br
+                    br
+                    button#rAll.buttons(style='background-color:#ffa366') Remove All
+            div.controlPanel#contP
+                h3 Control Panel
+                button#play.buttons(style='background-color:#476b6b;color:white') Play
+                br
+                br
+                button#pause.buttons(style='background-color:#476b6b;color:white') Pause
+                br
+                br
+                button#step.buttons(style='background-color:#476b6b;color:white') Next Step
+                br
+                br
+                button#sort.buttons(style='background-color:#476b6b;color:white') Sort
+                br
+                br
+                button#rev.buttons(style='background-color:#476b6b;color:white') Reverse
+                br
+                br
+                button#empty.buttons(style='background-color:#476b6b;color:white') Empty
+                br
+                br
+            div.tabs
+                div#cdv.codeDiv
+                    p #{j}
+                    p #{p}
+                    p #{cs}
+                    p #{cp}
+                .messageBoard
+                    div
+                        b#tf Target:&nbsp&nbsp
+                        input#target.textArea(type='Number')
+                        br
+                        br
+                        br
+                    span#tip1(style="user-select:none;position:relative;top:-15px") Press P to pause/play
+                    br
+                    span#tip2(style="user-select:none;position:relative;top:-15px") Press N when paused to advance the simulation
+                    br
+                    span#tip3(style="user-select:none;position:relative;top:-15px") You can use the Control Panel for the same
+                    br
+                    p#info.info
+        include ./footer.pug

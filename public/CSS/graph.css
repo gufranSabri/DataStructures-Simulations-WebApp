@@ -1,0 +1,31 @@
+body{user-select: none;}
+.mainDiv{
+    width: 100%;
+    margin: auto;
+}
+#controls{
+    position: absolute;
+    width: 270px;
+    background: -webkit-linear-gradient(#94b8b8, #5c8a8a);
+    background:    -moz-linear-gradient(#94b8b8, #5c8a8a);
+    background:         linear-gradient(#94b8b8, #5c8a8a);
+    border: black 1px solid;
+    z-index: 2;
+    border-radius: 15px;
+    padding-bottom: 20px;
+    padding: 10px;
+    margin: auto;
+    cursor: grab;
+    color: white;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+#controls::-webkit-scrollbar {display: none;}
+#inst{font-size: 13px;}
+.edit button, .edit select{
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.edit select{height: 25px;}

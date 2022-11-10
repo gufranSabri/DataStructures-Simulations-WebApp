@@ -1,0 +1,138 @@
+doctype html
+meta(name="viewport" content="width=device-width, initial-scale=1.0")
+head 
+    title DSLearn - Account
+    link(rel='shortcut icon' type='image/png' href='/CSS/Images/tabLogo.png')
+    link(rel='stylesheet' type='text/css' href='/CSS/signIU.css')
+    link(rel="shortcut icon" type="image/png" href="/CSS/Images/tabLogo.png")
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+    script.
+        $(document).ready(function(){
+            $(".header").css("text-align","center")
+            $(".header").css("border","none")
+            $(".header").html("<a class='logo' href='/'>DSLearn</a>")
+            $(".logo").before("<img class='logoImg' src='/CSS/Images/logo.png' width='30px' height='30px')/>");
+            $(".logo").css("left","0px")
+            $(".logoImg").css({"position":"relative","left":"0px"})
+            var form=document.getElementById("theForm");
+            var info=$("#EW").html().split("~"); 
+            var auth=info[0],ss= $("#4").html();
+            $("#EW").html("");
+            $("#4").html("Forgot your password?");
+            $(".button1").click(function(){
+                $(".button1").prop("disabled",true);
+                var userAction = $(this).html(), shouldSubmit=false;
+
+                if(userAction=="Verify"&&$("#V").html().length!=0)shouldSubmit=true;
+                else if(userAction=="Log in"){
+                    var name = document.getElementById("N").value;
+                    var pass = document.getElementById("P").value;
+                    if(name!=""&&pass.length!="")shouldSubmit=true;
+                    else $("#EW").html("Please fill in all the details!")
+                }
+                else{
+                    var email = document.getElementById("E").value;
+                    var name = document.getElementById("N").value;
+                    var pass = document.getElementById("P").value;
+                    if(name==""||email.length==0)$("#EW").html("Please fill out all the details!")
+                    else if(!verifyPassword(pass))$("#EW").html("The password should be atleast 8 characters long and can only contain alphanumeric characters!")
+                    else if(name!=""&&email.length!=0) shouldSubmit=true;
+                }
+                if(shouldSubmit)$("#theForm").submit()
+                else $(".button1").prop("disabled",false);
+            })
+            document.addEventListener("keyup",function(evt){if(evt.keyCode==13)$(".button1").click()});
+            $("#SUI").click(function(){
+                $("#EW").html("");
+                $("#1").toggle()
+                $("#5").toggle()
+                document.getElementById("E").value="";
+                document.getElementById("N").value="";
+                document.getElementById("P").value="";
+                if($(this).html()=="Already a member?"){
+                    $("#heading").html("<u>Sign in!</u>")
+                    $(".button1").html("Log in")
+                    $("#chat").html("Your work will not be tracked if you do not log in!"+
+                       "<br>Sign in and get back to your work exactly where you left it!<br><br><br>")
+                    $(this).html("New to DSLearn?")
+                }
+                else{
+                    $("#heading").html("<u>Hi there visitor!</u>")
+                    $(".button1").html("Sign up")
+                    $("#chat").html("We greatly appreciate you taking the time to visit our website!"+
+                       "<br>For a fuller experience, sign up and become a member!"+
+                       "<br>Track your progress, write tests, win points and much more!")
+                    $(this).html("Already a member?")
+                }
+            })
+            if(auth=="noEm1"||auth=="noEm2"||auth=="noN"||auth=="verif"||auth=="noVerif"){
+                document.getElementById("E").value= info[1];
+                document.getElementById("N").value= info[2];
+                document.getElementById("P").value= info[3];
+            }
+            if(auth=="noAuth"){
+                $("#SUI").click();
+                $("#EW").html("Username or password is incorrect!");
+                document.getElementById("N").value= info[2];
+                document.getElementById("P").value= info[3];
+            }
+            else if(auth=="noEm1")$("#EW").html("Invalid email!");
+            else if(auth=="noEm2")$("#EW").html("Email already taken!");
+            else if(auth=="noN")$("#EW").html("Username already taken!");
+            else if(auth=="verif"||auth=="noVerif"){
+                if(auth=="verif")$("#EW").html("A verification code has been emailed to you");
+                else $("#EW").html("Invalid code!");
+                $("#1").hide();
+                $("#2").hide();
+                $("#3").hide();
+                $("#V").show();
+                $(".chatDiv").hide()
+                $(".button1").html("Verify")
+            }
+            //- if($(".chatDiv").css("display")=="none"){location.href="/learn";}
+        })
+        function verifyPassword(p){
+            for(var i=0;i<p.length;i++)if(!p.charAt(i).match(/[a-zA-Z]/)&&!p.charAt(i).match(/[1-9]/))return false;
+            return p.length>=8;
+        }
+    body
+        include ./header.pug
+        .mainDiv
+            .mainDiv2
+                .formDiv#FMD
+                    .formHolder#fh
+                            div
+                                span#EW(style="color:red") #{authorized}~#{email}~#{name}~#{pass}
+                                br
+                                br
+                            form#theForm(action="/account" method="POST" autocomplete="off")
+                                div#1
+                                    input#E.textArea(name="email" placeholder="Email" type="email")
+                                div#2(style="position:relative; top:5px")
+                                    input#N.textArea(name="name" placeholder="Username" type="text" maxlength="25")
+                                div#3(style="display: flex;position:relative; top:10px")
+                                    input#P.textArea(name="pass" placeholder="Password" type="password")
+                                br
+                                input#V.textArea(style="display:none" name="verif" placeholder="Verification Code" type="number")
+                                div#5(style="display:none;position:relative; top:10px")
+                                    
+                                    a#4(href="") 
+                                    br
+                            button.button1(style="position:relative; top:20px") Sign up
+                .chatDiv
+                    h1#heading(style="color:#04a7a7")             
+                        u Hi there visitor!
+                    p#chat(style="line-height:1.5")
+                        |We greatly appreciate you taking the time to visit our website!
+                        br
+                        |For a fuller experience, sign up and become a member!
+                        br
+                        |Track your progress, write tests, win points and much more!
+                    br
+                    button.button2#SUI Already a member?
+                    button.button3(onclick="location.href='/learn'") Skip
+                div(style="display:none")
+                    form(action="/", method="post")
+                        input(type="text" id="n" name="name")
+                        button#x Submit
+        include ./footer.pug

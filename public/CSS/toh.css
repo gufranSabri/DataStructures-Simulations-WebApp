@@ -1,0 +1,179 @@
+.THEDIV{
+    position: relative;
+    height: 550px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.numDisks{
+    position: relative;
+    width: 150px;
+    height: 70px;
+}
+.headingDiv{
+    width: 90%;
+    padding: 10px;
+    margin: auto;
+    position: relative;
+}
+#help{
+    color: gray;
+    user-select: none;
+}
+.headingDiv i:hover{color: black;}
+#heading{
+    font-size: 35px;
+    font-weight: bold;
+    color: black;
+    user-select: none;
+}
+#help:hover{color: black;}
+.mainDiv{
+    font-family: 'Segoe UI';
+    margin: auto;
+    width: 90%;
+    background: -webkit-linear-gradient(#e6ffff,#99ffff);
+    background:    -moz-linear-gradient(#e6ffff,#99ffff);
+    background:         linear-gradient(#e6ffff,#99ffff);
+    position: relative;
+    padding: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: #eeeeee;
+    display: flex;
+    justify-content: space-evenly;
+    border-radius: 15px;
+    border: turquoise 2px solid;
+    box-shadow: 5px 5px 5px gray;
+}
+#rst:hover{color: black;}
+.towerHolder{
+    height: 200px;
+    width: 250px;
+    display: flex;
+    flex-direction: column-reverse;
+    border-bottom: black 5px solid;
+    background-position: center;
+    background-image: url("/CSS/Images/tower.png");
+    user-select: none;
+}
+.disks{
+    display: none;
+    border-radius: 15px;
+    height: 30px;
+    width: 200px;
+    margin-right: auto;
+    margin-left: auto;
+    z-index: 100;
+    position: relative;
+    top:"0px";
+    left:"0px";
+    background-color: violet;
+}
+#d5{
+    background-color:#5cd65c;
+    width: 170px;
+}
+#d4{
+    background-color:#ffff00;
+    width: 140px
+}
+#d3{
+    background-color:#ff5c33;
+    width: 110px
+}
+#d2{
+    background-color:#0073e6;
+    width: 80px;
+}
+#d1{
+    background-color:#ff9933;
+    width: 50px;
+}
+.downPanel{
+    margin: auto;
+    width: 90%;
+    padding: 11px;
+    display: flex;
+    flex-direction: column;
+}
+.downSubPanel{
+    margin: auto;
+    width: 90%;
+    display: flex;
+    justify-content: space-around;
+    position: relative;
+    padding: 10px;
+    border-radius: 15px;
+}
+.buttons{
+    user-select: none;
+    font-family: 'Segoe UI';
+    color: black;
+    background-color: white;
+    border-radius: 15px;
+    height: 40px;
+    width: 170px;
+    border: black 3px solid;
+    padding-left: 20px;
+    padding-right: 20px;
+    user-select: none;
+    outline: none;
+}
+.buttons:hover{
+    color: white;
+    background-color: black;
+}
+.help{
+    display: none;
+    margin: auto;
+    opacity: 0.8;
+    border-radius: 5px 15px 15px 15px;
+    width: 90%;
+    padding-top: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-bottom: 10px;
+    background-color:#e6e6e6;
+    overflow-x: hidden;
+}
+.help::-webkit-scrollbar {display: none;}
+.help {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+h4{user-select: none;}
+@media (max-width:850px){
+    #heading{font-size: 30px;}
+    .help p{font-size: 12px;}
+}
+@media (max-width:700px){
+    .towerHolder{
+        height: 100px;
+        width: 150px;
+        font-size: 10px;
+    }
+    #d6{height:15px;width: 100px;}
+    #d5{height:15px;width: 90px;}
+    #d4{height:15px;width: 75px;}
+    #d3{height:15px;width: 60px;}
+    #d2{height:15px;width: 45px;}
+    #d1{height:15px;width: 30px;}
+}
+@media (max-width:400px){
+    .buttons{
+        height: 40px;
+        width: 50px;
+        font-size: 10px;
+    }
+}
+@media (max-width:600px){
+    .buttons{
+        height: 40px;
+        width: 70px;
+        font-size: 10px;
+    }
+    #heading{font-size: 18px;}
+    .headingDiv span{font-size: 10px;}
+    .downSubPanel h4{font-size: 10px;}
+}

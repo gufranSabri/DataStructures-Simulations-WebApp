@@ -1,0 +1,117 @@
+body{user-select: none;}
+.heading{
+    font-family: 'Segoe UI';
+    margin: auto;
+    width: 90%;
+}
+.mainDiv{
+    display: flex;
+    font-family: 'Segoe UI';
+    margin: auto;
+    width: 90%;
+    height:550px;
+    border-radius: 15px;
+    position: relative;
+}
+.codeDivMain{
+    height: 550px;
+    width: 1050px;
+}
+.langs{
+    display: flex;
+    position: relative;
+    top: 5px;
+    height: 30px;
+    width: 1000px;
+}
+.lang{
+    color:#999999;
+    position: relative;
+    top: 2px;
+    height: 27px;
+    width: 100px;
+    text-align: center;
+    border-radius: 7px 7px 0px 0px;
+}
+.lang:hover{color:black;}
+.codeDivSecond{
+    font-family: monospace;
+    font-size: 14px;
+    display: flex;
+    position: relative;
+    top: 5px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    padding-left: 5x;
+    padding-right: 5px;
+    height: 470px;
+    width: 1000px;
+    background-color :#002b36;
+    overflow-y: scroll;
+    overflow-x: scroll;
+    border-radius: 7px;
+    white-space: nowrap;
+}
+.lineNo{
+    height: 470px;
+    width: 30px;
+    text-align: right;
+    padding-right: 5px;
+    color:#839496;
+    border-right: 1px solid #839496;
+}
+.code{
+    color: white;
+    width: 970px;
+    padding-left: 10px;
+    user-select: text;
+}
+.codeDivSecond::-webkit-scrollbar {display: none;}
+.codeDivSecond {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.recommendations{
+    position: relative;
+    top: 5px;
+    height: 495px;
+    width: 280px;
+    border-radius: 15px;
+    background-color: #f2f2f2;
+    overflow-y: scroll;
+    padding: 10px;
+}
+.recommendations a:hover{font-weight: 500;}
+.recommendations a{
+    color: #666666;
+    user-select: text;
+}
+.recommendations::-webkit-scrollbar {display: none;}
+.recommendations {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+@media (max-width:900px){
+    .heading h1{
+        font-size: 23px;
+        text-align: center;
+    }
+    .mainDiv{
+        height: 700px;
+        flex-direction: column;
+        width: 100%;
+    }
+    .codeDivMain{width: 100%;}
+    .langs{width: 100%;}
+    .lang:hover{color:black;}
+    .codeDivSecond{
+        font-size: 10px;
+        width: 100%;
+    }
+    .code{width: 100%;}
+    .recommendations{
+        top: 20px;
+        height: 200px;
+        width: 96%;
+    }
+}

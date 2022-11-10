@@ -1,0 +1,29 @@
+body{font-family: 'Segoe UI';}
+.foot{
+    display: flex;
+    justify-content: space-evenly;
+    user-select:none;
+    position: relative;
+    top: 50px;
+    border-top: 1px solid #d9d9d9;
+    height: 250px;
+    width: 100%;
+}
+.box{
+    position: relative;
+    top: 20px;
+    height: 200px;
+    font-size: 15px;
+    user-select: none;
+}
+h5{user-select: none;}
+.box a{color: #999999;}
+.box span{color: #999999;}
+.box a:hover{color: black;}
+
+
+@media (max-width:900px){
+    .box{
+        font-size: 12px;
+    }
+}

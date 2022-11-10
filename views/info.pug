@@ -1,0 +1,173 @@
+doctype html
+meta(name="viewport" content="width=device-width, initial-scale=1.0")
+html
+    head
+        title DSLearn - Sorting
+    link(rel="shortcut icon" type="image/png" href="/CSS/Images/tabLogo.png")
+    link(rel="stylesheet" type="text/css" href="/CSS/info.css")
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+    script.
+        function goToSim(ele){
+            var x= ele.getAttribute("value");
+            open((x=="merge-sort"?"/":"/linear-simulation/")+x,"_blank");
+        }
+        function goToCode(ele){open("/code/"+ele.getAttribute("value")+"/Java","_blank");}
+    body
+        include ./header.pug
+        div.mainDiv
+            if(topic=="algo"||topic=="recursion"||topic=="linear"||topic=="nonlinear")
+                h1 Coming Soon
+            if(topic!="algo"&&topic!="recursion"&&topic!="linear"&&topic!="nonlinear")
+                h1 Introduction
+            if(topic=="search")
+                p.
+                    Searching is the process of finding a designated target element within a group of
+                    items, or determining that the target does not exist within the group. The group of
+                    items to be searched is sometimes called the search pool. We will examine two 
+                    common approaches to searching: a linear search and a binary search. 
+            if(topic=="sort")
+                p.
+                    Sorting is the process of arranging a group of items into a defined order, either
+                    ascending or descending, based on some criterion. For example, you may want to
+                    alphabetize a list of names or put a list of survey results into descending numeric
+                    order. 
+                    We will examine three sequential sorts — selection sort, insertion
+                    sort, and bubble sort, and two logarithmic sorts — quick sort and merge sort. 
+            br
+            if(topic=="search")
+                h2 Linear Search
+                p.
+                    If the search pool is organized into a list of some kind, one straightforward way
+                    to perform the search is to start at the beginning of the list and compare each
+                    value in turn to the target element. Eventually, we will either find the target or
+                    come to the end of the list and conclude that the target doesn’t exist in the group.
+                    This approach is called a linear search because it begins at one end and scans the
+                    search pool in a linear manner.
+                br
+                div
+                    button.buttons(onclick="goToSim(this)" value="linear-search") Go to Simulation &rarr;
+                    button#goToC.buttons(onclick="goToCode(this)" value="linear-search") Code &rarr;
+                br
+                hr
+                br
+
+                h2 Binary Search
+                p.
+                    If the group of items in the search pool is sorted, then our approach to searching
+                    can be much more efficient than that of a linear search. A binary search algorithm
+                    eliminates large parts of the search pool with each comparison by capitalizing on
+                    the fact that the search pool is in sorted order.<br><br>
+                    Instead of starting the search at one end or the other, a binary
+                    search begins in the middle of the sorted list. If the target element is
+                    not found at that middle element, then the search continues. And
+                    because the list is sorted, we know that if the target is in the list, it
+                    will be on one side of the array or the other, depending on whether
+                    the target is less than or greater than the middle element. Thus, because the list is
+                    sorted, we eliminate half of the search pool with one carefully chosen comparison.
+                    The remaining half of the search pool represents the viable candidates in which
+                    the target element may yet be found.<br><br>
+                    The search continues in this same manner, examining the middle element of the
+                    viable candidates, eliminating half of them. Each comparison reduces the viable
+                    candidates by half until eventually the target element is found or there are no
+                    more viable candidates, which means the target element is not in the search pool. 
+                br
+                div
+                    button.buttons(onclick="goToSim(this)"  value="binary-search") Go to Simulation &rarr;
+                    button#goToC.buttons(onclick="goToCode(this)" value="binary-search") Code &rarr;
+                br
+            if(topic=="sort")
+                h2 Selection Sort
+                p
+                    |The selection sort algorithm sorts a list of values by repetitively putting a particular 
+                    |value into its final, sorted position. In other words, for each position in the list,
+                    |the algorithm selects the value that should go in that position and puts it there.
+                    br
+                    |The general strategy of the selection sort algorithm is as follows: Scan the entire
+                    |list to find the smallest value. Exchange that value with the value in the first position
+                    |of the list. Scan the rest of the list (all but the first value) to find the smallest
+                    |value, and then exchange it with the value in the second position of the list. Scan
+                    |the rest of the list (all but the first two values) to find the smallest value, and then
+                    |exchange it with the value in the third position of the list. Continue this process
+                    |for each position in the list. When complete, the list is sorted. 
+                br
+                div
+                    button.buttons(onclick="goToSim(this)"  value="selection-sort") Go to Simulation &rarr;
+                    button.buttons#goToC(onclick="goToCode(this)" value="selection-sort") Code &rarr;
+                br
+                hr
+                br
+                h2 Insertion Sort
+                p
+                    |The insertion sort algorithm sorts a list of values by repetitively inserting a particular
+                    |value into a subset of the list that has already been sorted. One at a time,
+                    |each unsorted element is inserted at the appropriate position in that
+                    |sorted subset until the entire list is in order.
+                    br
+                    |The general strategy of the insertion sort algorithm is as follows:
+                    |Sort the first two values in the list relative to each other by exchanging them if necessary. 
+                    |Insert the list’s third value into the appropriate
+                    |position relative to the first two (sorted) values. Then insert the fourth value into
+                    |its proper position relative to the first three values in the list. Each time an insertion is made, the number of values in the sorted subset increases by one. Continue
+                    |this process until all values in the list are completely sorted. The insertion process
+                    |requires that the other values in the array shift to make room for the inserted element.
+                br
+                div
+                    button.buttons(onclick="goToSim(this)" value="insertion-sort") Go to Simulation &rarr;
+                    button.buttons#goToC(onclick="goToCode(this)" value="insertion-sort") Code &rarr;
+                br
+                hr
+                br
+                h2 Bubble Sort
+                p
+                    |A bubble sort is another sequential sort algorithm that uses two nested loops. It
+                    |sorts values by repeatedly comparing neighboring elements in the list and swapping their positions if they are not in order relative to each other. 
+                    br
+                    |The general strategy of the bubble sort algorithm is as follows:
+                    |Scan through the list comparing adjacent elements, and exchange
+                    |them if they are not in relative order. This has the effect of “bubbling” the largest value to the last position in the list, which is its
+                    |appropriate position in the final, sorted list. Then scan through the
+                    |list again, bubbling up the second-to-last value. This process continues until all elements have been bubbled into their correct positions.
+                br
+                div
+                    button.buttons(onclick="goToSim(this)"  value="bubble-sort") Go to Simulation &rarr;
+                    button.buttons#goToC(onclick="goToCode(this)" value="bubble-sort") Code &rarr;
+                br
+                hr
+                br
+                h2 Quick Sort
+                p
+                    |The quick sort algorithm sorts a list by partitioning the list using an arbitrarily
+                    |chosen partition element and then recursively sorting the sublists on either side of
+                    |the partition element.
+                    br
+                    |The general strategy of the quick sort algorithm is as follows: First, choose one element of the list to act as a partition element. Next, 
+                    |partition the list so that all elements less than the partition element are to the left of
+                    |that element and all elements greater than the partition element are
+                    |to the right. Finally, apply this quick sort strategy (recursively) to
+                    |both partitions.
+                br
+                div
+                    button.buttons(onclick="goToSim(this)"  value="quick-sort") Go to Simulation &rarr;
+                    button.buttons#goToC(onclick="goToCode(this)" value="quick-sort") Code &rarr;
+                br
+                hr
+                br
+                h2 Merge Sort
+                p
+                    |The merge sort algorithm, another recursive sort algorithm, sorts a list by recursively
+                    |dividing the list in half until each sublist has one element and then recombining these
+                    |sublists in order.
+                    br
+                    |The general strategy of the merge sort algorithm is as follows:
+                    |Begin by dividing the list into two roughly equal parts and then
+                    |recursively calling itself with each of those lists. Continue the recursive
+                    |decomposition of the list until the base case of the recursion is
+                    |reached, where the list is divided into lists of length one, which are
+                    |by definition sorted. Then, as control passes back up the recursive
+                    |calling structure, the algorithm merges the two sorted sublists resulting from the two recursive calls into one sorted list. 
+                br
+                div
+                    button.buttons(onclick="goToSim(this)"  value="merge-sort") Go to Simulation &rarr;
+                    button.buttons#goToC(onclick="goToCode(this)" value="merge-sort") Code &rarr;
+                br
+        include ./footer.pug

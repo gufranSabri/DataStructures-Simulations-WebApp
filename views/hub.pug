@@ -1,0 +1,102 @@
+doctype html
+meta(name="viewport" content="width=device-width, initial-scale=1.0")
+html
+    head
+    title DSLearn - Algorithms
+
+    link(rel="stylesheet" type="text/css" href="/CSS/hub.css")
+    link(rel="shortcut icon" type="image/png" href="/CSS/Images/tabLogo.png")
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+    script.
+        var table, list, tableUpdateTimeout;
+        $(document).ready(function(){
+            table= document.getElementById("list");
+            list=[
+                {title:"Linear Search",                   diff:"Easy",             valueS:"/linear-simulation/linear-search",       valueC:"/codgie/linear-search/Java"},
+                {title:"Binary Search",                   diff:"Medium",           valueS:"/linear-simulation/binary-search",       valueC:"/code/binary-search/Java"},
+                {title:"Selection Sort",                  diff:"Easy",             valueS:"/linear-simulation/selection-sort",      valueC:"/code/selection-sort/Java"},
+                {title:"Insertion Sort",                  diff:"Easy",             valueS:"/linear-simulation/insertion-sort",      valueC:"/code/insertion-sort/Java"},
+                {title:"Bubble Sort",                     diff:"Easy",             valueS:"/linear-simulation/bubble-sort",         valueC:"/code/bubble-sort/Java"},
+                //- {title:"Quick Sort",                      diff:"Difficult",        valueS:"/sim/quick-sort",          valueC:"/code/quick-sort/Java"},
+                //- {title:"Quick Sort",                      diff:"Difficult",        valueS:"/linear-simulation/quick-sort",          valueC:"/code/quick-sort/Java"},
+                //- {title:"Merge Sort",                      diff:"Difficult",        valueS:"block",                                  valueC:"block"},
+                //- {title:"Heap Sort",                       diff:"Medium",           valueS:"/sim/heap-sort",           valueC:"block"},
+                {title:"Towers of Hanoi",                 diff:"Medium",           valueS:"/towers-of-hanoi",                       valueC:"block"},
+                {title:"Stack",                           diff:"Medium",           valueS:"/sim/linked-stack",        valueC:"/code/linked-stack/Java"},
+                {title:"Queue",                           diff:"Medium",           valueS:"/sim/queue",               valueC:"/code/queue-linked/Java"},
+                {title:"Binary Search Tree (BST)",        diff:"Difficult",        valueS:"/sim/binary-search-tree",  valueC:"/code/binary-search-tree/Java"},
+                {title:"Max Heap",                        diff:"Difficult",        valueS:"/sim/max-heap",            valueC:"/code/max-heap/Java"},
+                {title:"Min Heap",                        diff:"Difficult",        valueS:"/sim/min-heap",            valueC:"/code/min-heap/Java"}
+                //- {title:"Graph",                           diff:"Difficult",        valueS:"/sim/graph",                                 valueC:"block"}
+                ]
+    
+            makeTable();
+            $(".searchBar").on("input",function(){
+                if(tableUpdateTimeout)clearTimeout(tableUpdateTimeout);
+                tableUpdateTimeout= setTimeout(updateTable,100)
+            })
+        })
+        function updateTable(){
+            if($(".searchBar").val().trim()=="")makeTable();
+            else{
+                var regex= new RegExp($(".searchBar").val().trim(),"gi");
+                var actualTable=table.childNodes[0],count=0;
+                for(var i=1;i<actualTable.childNodes.length;i++){
+                    var id=actualTable.childNodes[i].childNodes[0].innerHTML;
+                    var title=extractSpanContent(actualTable.childNodes[i].childNodes[1].innerHTML);
+                    if(id.match(regex)||title.match(regex)){
+                        $("#x"+i).show();
+                        $("#x"+i).css("background-color",(count++%2==0)?"#f7f7f7":"white")
+                    }
+                    else $("#x"+i).hide();
+                }
+            }
+        }
+        function makeTable(){
+            table.innerHTML="<tbody><tr style='border-bottom:#cccccc 1px solid;'><th>#</th><th>Title</th><th>Code</th><th>Simulation</th><th>Difficulty</th></tr></tbody>";
+            for(var i=0;i<list.length;i++){
+                var row = table.insertRow(i+1);row.id="x"+(i+1);
+                var cell1 = row.insertCell(0); cell1.innerHTML=i+1;
+                var cell2 = row.insertCell(1); cell2.innerHTML="<span style='color:#4a86ff'>"+list[i].title+"</span>"; 
+                var cell3 = row.insertCell(2); 
+                if(list[i].valueC!="block")cell3.innerHTML='&nbsp&nbsp<span value='+list[i].valueC+' class="tableSpan"><img id="cdImg" src="/CSS/Images/code.png"/></span>';
+                else cell3.innerHTML='&nbsp&nbsp&nbsp<span value="" class="tableSpan" ><img id="bl" src="/CSS/Images/block.png"/></span>'
+                var cell4 = row.insertCell(3); cell4.innerHTML=list[i].valueS=="block"?'&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span value="" class="tableSpan" ><img id="bl" src="/CSS/Images/block.png"/></span>':
+                    '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span value='+list[i].valueS+' class="tableSpan" ><img id="pl" src="/CSS/Images/play.png"/></span>';
+                var cell5 = row.insertCell(4); cell5.innerHTML="<span id='diff' style='color:white;border-radius:10px'>"+list[i].diff+"</span>";
+
+                if(list[i].diff=="Easy")cell5.childNodes[0].style.background="#2eb82e";
+                else if(list[i].diff=="Medium")cell5.childNodes[0].style.background="orange";
+                else cell5.childNodes[0].style.background="red";
+                if(i%2==0)row.style.background="#f7f7f7"
+            }
+            $(".tableSpan").click(function(){if($(this).attr("value")!="")open($(this).attr("value"),"_blank");})
+        }
+        function extractSpanContent(span){return span.substring(16,span.length-7)}
+    body
+        include ./header.pug
+        .mainDiv
+            .leftDiv
+                .ldHeadingDiv
+                    h1 Welcome to the algorithms index!
+                    p(style="font-weight:300") 
+                        |Satisfy all your data structure needs!
+                        br
+                        |Whether you need a detailed explanation or a quick look at some code, its all here.
+                .options
+                    input.searchBar(placeholder="Search topic titles or IDs" type="text")
+                    //- .dropHolder
+                        p#dropTitle
+                            |Topic&nbsp
+                            i(class="fas fa-caret-down")
+                        p#dropTitle 
+                            |Difficulty&nbsp
+                            i(class="fas fa-caret-down")
+                table#list
+                    tr(style="border-bottom:#cccccc 1px solid;")
+                        th #
+                        th Title
+                        th Code
+                        th Simulation
+                        th Difficulty                
+        include ./footer.pug

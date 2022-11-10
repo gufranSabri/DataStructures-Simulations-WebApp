@@ -1,0 +1,258 @@
+body{user-select: none;}
+.heading{
+    display: flex;
+    font-family: 'Segoe UI';
+    margin: auto;
+    width: 90%;
+    top: 10px;
+    padding: 5px;
+}
+#help{
+    text-decoration: none;
+    color: #999999;
+    position: relative;
+    top: 15px;
+    left: 30px;
+    font-size: 13px;
+    cursor: pointer;
+}
+#help:hover{color: black;}
+#heading{font-size: 25px;}
+.mainDiv{
+    display: flex;
+    justify-content: space-evenly;
+    font-family: 'Segoe UI';
+    margin: auto;
+    width: 90%;
+    height:80%;
+    position: relative;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.arr{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 15px;
+    height: 515px;
+    width: 250px;
+}
+.eleBox{
+    display: flex;
+    justify-content: space-around;
+    position: relative;
+}
+.ele, .pointer{
+    text-align: center;
+    width: 100px;
+}
+.pointer{font-weight: bold;}
+.ele{
+    background-color: white;
+    border-radius: 15px;
+    text-align: center;
+    width: 100px;
+}
+.editBox{
+    position: relative;
+    top:-10px;
+    width: 180px;
+    padding: 10px;
+}
+#add{
+    background: -webkit-linear-gradient(#70db70, #2eb82e);
+    background:    -moz-linear-gradient(#70db70, #2eb82e);
+    background:         linear-gradient(#70db70, #2eb82e);
+    background-color: #e6e6e6;
+}
+#remove{
+    background: -webkit-linear-gradient(#ff704d,#e62e00);
+    background:    -moz-linear-gradient(#ff704d,#e62e00);
+    background:         linear-gradient(#ff704d,#e62e00);
+    background-color: #e6e6e6;
+    top:10px;
+}
+.editBoxHalf{
+    color: white;
+    padding:5px;
+    padding-bottom: 5px;
+    text-align: center;
+    position:relative;
+    border-radius: 15px;
+    height: 253px;
+}
+.textArea{
+    text-align: center;
+    font-size: 18px;
+    height: 30px;
+    width: 150px;
+    border:none;
+    outline: none;
+    border-radius:10px
+}
+.buttons{
+    font-family: 'Segoe UI';
+    height: 50px;
+    width: 100px;
+    border-radius: 15px;
+    border: none;
+    outline: none;
+    margin: auto;
+}
+.buttons:hover{box-shadow: 5px 5px 5px black;}
+.controlPanel{
+    color: white;
+    text-align: center;
+    background: -webkit-linear-gradient(#94b8b8, #5c8a8a);
+    background:    -moz-linear-gradient(#94b8b8, #5c8a8a);
+    background:         linear-gradient(#94b8b8, #5c8a8a);
+    width: 130px;
+    height: 520px;
+    border-radius: 15px;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+}
+.tabs{
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    width: 50%;
+}
+.messageBoard{
+    position: relative;
+    width: 97%;
+    height: 250px;
+    padding: 10px;
+    overflow: scroll;
+    overflow-x: hidden;
+    font-size: 13px;
+    background-color: #e6ffff;
+    border-radius: 10px;
+    border: teal 1px solid;
+}
+.messageBoard::-webkit-scrollbar {display: none;}
+.messageBoard {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.codeDiv{
+    font-family: monospace;
+    color: white;
+    font-size: 13px;
+    position: relative;
+    padding: 10px;
+    height: 250px;
+    width: 97%;
+    background-color :#002b36;
+    overflow-y: scroll;
+    overflow-x: scroll;
+    border-radius: 7px;
+    user-select: text;
+    border: teal 1px solid;
+}
+.codeDiv::-webkit-scrollbar {display: none;}
+.codeDiv {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.help{
+    display: none;
+    margin: auto;
+    opacity: 0.8;
+    border-radius: 5px 15px 15px 15px;
+    width: 90%;
+    padding-top: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-bottom: 10px;
+    background-color:#e6e6e6;
+    overflow-x: hidden;
+}
+.help::-webkit-scrollbar {display: none;}
+.help {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+#target{background-color: #e6e6e6;}
+.simAction{
+    width: 170px;
+    height: 30px;
+    outline: none;
+    background-color: #e6ffff;
+    border-radius: 5px;
+}
+#settings{
+    position: absolute;
+    width: 200px;
+    display: none;
+    background-color: white;
+    top: 100px;
+    z-index: 2;
+    border-radius: 12px;
+    border: teal 2px solid;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+}
+#settings h2{color: #0066ff;}
+#settings h4{
+    color: red;
+    line-height: 0.1;
+}
+#settings span{
+    line-height: 0.1;
+    font-size: 13px;
+}
+#settings a{
+    line-height: 0.1;
+    font-size: 14px;
+    color: rgb(180, 21, 180);
+}
+#settings a:hover{
+    color:purple;
+    text-decoration: underline;
+}
+
+table{
+    width: 100%;
+    margin: auto;
+    border-collapse: collapse;
+}
+td{
+    overflow-x: scroll;
+    white-space: nowrap;
+}
+td::-webkit-scrollbar {display: none;}
+td {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+@media (max-width:1200px){
+    .editBox,#add,#remove,#AB,#DB,.ABB,.DBB{display: none;}
+    #help{display: none;}
+}
+@media (max-width:1000px){
+    .tabs,.codeDiv,.messageBoard,#IB,#CV,#IB,#CV,.IBB,.CVV{display: none;}
+}
+@media (max-width:600px){
+    #heading{font-size: 22px;}
+    #help{
+        top: 8px;
+        font-size: 13px;
+    }
+    .ele{width: 90px;}
+}
+@media (max-width:400px){
+    #heading{font-size: 20px;}
+    #help{
+        top: 8px;
+        font-size: 12px;
+    }
+    .buttons{
+        width: 90px;
+        height: 50px;
+    }
+    .ele{width: 70px;}
+}

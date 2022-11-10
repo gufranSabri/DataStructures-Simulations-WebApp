@@ -1,0 +1,75 @@
+doctype html
+meta(name="viewport" content="width=device-width, initial-scale=1.0")
+html
+    head
+        title DSLearn - Code
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+    link(rel="shortcut icon" type="image/png" href="/CSS/Images/tabLogo.png")
+    link(rel="stylesheet" type="text/css" href="/CSS/code.css")
+    script(src="/JS/code.js")
+    script.
+        $(document).ready(function(){
+            var x= document.getElementById("codelol");
+            var y= x.innerHTML.replace(/&lt;/gi,"<").replace(/&gt;/gi,">").replace(/&amp;/gi,"&").split("\n");
+            var z= document.getElementById("heading").innerHTML.split(" ");
+            var lang= z[0];
+
+            x.innerHTML="";
+            document.getElementById("heading").innerHTML= y[0];
+            document.getElementById("Java").addEventListener("click",function(){location.href="/code/"+z[1]+"/Java"})
+            document.getElementById("Python").addEventListener("click",function(){location.href="/code/"+z[1]+"/Python"})
+            document.getElementById("Cpp").addEventListener("click",function(){location.href="/code/"+z[1]+"/Cpp"})
+            document.getElementById("Cs").addEventListener("click",function(){location.href="/code/"+z[1]+"/Cs"})
+
+            document.getElementById(lang).style.fontWeight= "bold";
+            document.getElementById(lang).style.fontSize= "18px";
+            document.getElementById(lang).style.color= "black";
+
+            if((y.length-1)*16>470)document.getElementById("ln").style.height= y.length*16+"px";
+            for(var i=1; i<=y.length-1; i++)$(".lineNo").html($(".lineNo").html()+i+'<br>');
+            
+            for(var i=1;i<y.length; i++){
+                var tempArr= tokenizer(y[i],lang);
+                for(var j=0;j<tempArr.length; j++)highlighter(tempArr[j],lang,".code");
+                $(".code").append("<span><br></span>");
+            }
+        });
+    body
+        include ./header.pug
+        div#head.heading 
+            h1#heading #{lang} #{topic}
+        div.mainDiv
+            div.codeDivMain
+                div.langs
+                    div#Java.lang Java
+                    div#Cs.lang C#
+                    div#Cpp.lang C++
+                    div#Python.lang Python
+                div.codeDivSecond
+                    div#ln.lineNo
+                    div#codelol.code #{code}
+            div.recommendations
+                h2 Other Programs
+                a(href="/code/linear-search/Java" target="_blank") Linear Search
+                br
+                a(href="/code/binary-search/Java" target="_blank") Binary Search
+                br
+                a(class="links" href="/code/selection-sort/Java" target="_blank") Selection Sort
+                br
+                a(class="links" href="/code/insertion-sort/Java" target="_blank") Insertion Sort
+                br
+                a(class="links" href="/code/bubble-sort/Java" target="_blank") Bubble Sort
+                br
+                a(class="links" href="/code/quick-sort/Java" target="_blank") Quick Sort
+                br
+                a(class="links" href="/code/stack/Java" target="_blank") Stack
+                br
+                a(class="links" href="/code/linked-stack/Java" target="_blank") Stack - Linked Implementation
+                br
+                a(class="links" href="/code/queue/Java" target="_blank") Queue
+                br
+                a(class="links" href="/code/queue-linked/Java" target="_blank") Queue - Linked Implementation
+                br
+                a(class="links" href="/code/binary-search-tree/Java" target="_blank") Binary Search Tree (BST)
+                br
+        include ./footer.pug
