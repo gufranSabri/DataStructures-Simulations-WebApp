@@ -7,7 +7,7 @@ const cookieParser= require('cookie-parser');
 const session = require('express-session');
 const MongoClient= require('mongodb');
 const device = require('express-device');
-const url ="mongodb+srv://gufran:wamedoo5@cluster0.w7ri1.mongodb.net/Users?retryWrites=true&w=majority"
+const url ="mongodb+srv://gufran:pleasedontsteal@cluster0.w7ri1.mongodb.net/Users?retryWrites=true&w=majority"
 const deleteCode ="delCode|~:"
 var verifCode=(Math.floor(1000 + Math.random() * 9000))+"";
 var touchDevices=["tablet","phone"];
