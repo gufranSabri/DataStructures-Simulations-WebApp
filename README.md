@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # DSLearn
 
 Simulation based learning environment for Data structures and algorithms.
