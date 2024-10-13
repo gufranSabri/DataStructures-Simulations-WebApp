@@ -1,10 +1,5 @@
 # DSLearn
 
-Simulation based learning environment for Data structures and algorithms.
-All the juicy stuff is on the 'Algorithms' page
-=======
-# DSLearn
-
 Simulation based learning environment for Data structures and algorithms.<br>
 All the juicy stuff is on the 'Algorithms' page. <br>
 http://learn-ds.herokuapp.com/
